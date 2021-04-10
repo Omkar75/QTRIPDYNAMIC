@@ -5,21 +5,56 @@ import config from "../conf/index.js";
 function getCityFromURL(search) {
   // TODO: MODULE_ADVENTURES
   // 1. Extract the city id from the URL's Query Param and return it
+  const urlparams = new URLSearchParams(search)
+  const city = urlparams.get("city");
+  return city;
 
 }
 
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
+  //debugger
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
-
+  try {
+    const result = await fetch(config.backendEndpoint + `/adventures?city=${city}`);
+    const data = await result.json();
+    return data;
+  } catch (e) {
+    return null;
+  }
 }
 
 //Implementation of DOM manipulation to add adventures for the given city from list of adventures
 function addAdventureToDOM(adventures) {
   // TODO: MODULE_ADVENTURES
   // 1. Populate the Adventure Cards and insert those details into the DOM
-
+  try{
+    for(let i=0;i<adventures.length;i++)
+    {
+      let item =document.createElement('div');
+      item.className= "col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4"
+      item.innerHTML =`<a href="detail/?adventure=${adventures[i].id} id=${adventures[i].id}>
+      <div class="activity card" id="${adventures[i].id}">
+      <img class="activity-card img" src=${adventures[i].image}"/>
+        <div class="m-3 flex-wrap">
+          <div class="d-flex justify-content-between">
+          <h5>${adventures[i].name}</h5>
+          <h6>${adventures[i].currency}${adventures[i].costPerHead}</h6>
+          </div>
+          <div class="d-flex justify-content-between">
+          <h6>Duration</h6>
+          <h6>${adventures[i].duration} Hours</h6>
+          </div>
+        </div>
+      <div class="category-banner">${adventures[i].category}</div>
+      </div>
+      </a>`;
+      document.getElementById("data").appendChild(item);
+    }
+  }catch(e){
+    return null
+  }
 }
 
 //Implementation of filtering by duration which takes in a list of adventures, the lower bound and upper bound of duration and returns a filtered list of adventures.
