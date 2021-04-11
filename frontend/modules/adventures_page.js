@@ -13,7 +13,6 @@ function getCityFromURL(search) {
 
 //Implementation of fetch call with a paramterized input based on city
 async function fetchAdventures(city) {
-  //debugger
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
   try {
@@ -34,7 +33,7 @@ function addAdventureToDOM(adventures) {
     {
       let item =document.createElement('div');
       item.className= "col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 mb-4"
-      item.innerHTML =`<a href="detail/?adventure=${adventures[i].id} id=${adventures[i].id}>
+      item.innerHTML =`<a href="detail/?adventure=${adventures[i].id}" id=${adventures[i].id}>
       <div class="activity card" id="${adventures[i].id}">
       <img class="activity-card img" src=${adventures[i].image}"/>
         <div class="m-3 flex-wrap">
@@ -61,14 +60,16 @@ function addAdventureToDOM(adventures) {
 function filterByDuration(list, low, high) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on Duration and return filtered list
-
+  let d = list.filter((dur)=> dur.duration >= low && dur.duration <= high);
+  return d;
 }
 
 //Implementation of filtering by category which takes in a list of adventures, list of categories to be filtered upon and returns a filtered list of adventures.
 function filterByCategory(list, categoryList) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on their Category and return filtered list
-
+  let c = list.filter((catlist) => categoryList.includes(catlist.category));
+  return c;
 }
 
 // filters object looks like this filters = { duration: "", category: [] };
@@ -82,8 +83,17 @@ function filterFunction(list, filters) {
   // TODO: MODULE_FILTERS
   // 1. Handle the 3 cases detailed in the comments above and return the filtered list of adventures
   // 2. Depending on which filters are needed, invoke the filterByDuration() and/or filterByCategory() methods
-
-
+  if(filters.category.length > 0){
+    list = filterByCategory(list, filters.category)
+  }
+  if (filters["duration"].length > 0) {
+    let choice = filters["duration"].split("-");
+    filteredList = filterByDuration(
+      list,
+      parseInt(choice[0]),
+      parseInt(choice[1])
+    );
+  }
   // Place holder for functionality to work in the Stubs
   return list;
 }

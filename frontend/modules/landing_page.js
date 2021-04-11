@@ -38,7 +38,7 @@ function addCityToDOM(id, city, description, image) {
   citieElements.innerHTML = `<a href="pages/adventures/?city=${id}" id="${id}">
     <div class="tile">
     <div class="tile-text text-center">
-    <h5>${city}</h5>
+    <h5>${city}</h5>  
     <p>${description}</p>
     </div>
     <img class="tile img img responsive" src="${image}"></div>
