@@ -34,7 +34,7 @@ function addCityToDOM(id, city, description, image) {
   // TODO: MODULE_CITIES
   // 1. Populate the City details and insert those details into the DOM
   const citieElements = document.createElement('div')
-  citieElements.className = "col d-flex col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 align-item-stretch"
+  citieElements.className = "col d-flex col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 align-item-stretch mb-4"
   citieElements.innerHTML = `<a href="pages/adventures/?city=${id}" id="${id}">
     <div class="tile">
     <div class="tile-text text-center">
